@@ -74,17 +74,24 @@
             text-decoration: none;
         }
 
-        .nav-logo-img {
+        .nav-logo-circle {
             width: 46px; height: 46px;
             border-radius: 50%;
-            object-fit: contain;
+            overflow: hidden;
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.08);
-            padding: 4px;
+            flex-shrink: 0;
             transition: all 0.3s;
         }
 
-        .nav-logo:hover .nav-logo-img {
+        .nav-logo-circle img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .nav-logo:hover .nav-logo-circle {
             transform: scale(1.08);
             border-color: rgba(201,169,110,0.3);
         }
@@ -179,19 +186,16 @@
             overflow: hidden;
         }
 
-        .hero-bg { position: absolute; inset: 0; z-index: 0; }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
 
-        .hero-bg img {
+        .hero-bg video {
             width: 100%; height: 100%;
             object-fit: cover;
             object-position: center 30%;
-            transform: scale(1.1);
-            animation: heroZoom 30s ease-in-out infinite alternate;
-        }
-
-        @keyframes heroZoom {
-            0% { transform: scale(1.1) translate(0, 0); }
-            100% { transform: scale(1.18) translate(-0.5%, -0.3%); }
         }
 
         .hero-overlay {
@@ -232,18 +236,24 @@
             padding: 0 24px;
         }
 
-        .hero-logo {
+        .hero-logo-circle {
             width: 130px; height: 130px;
             border-radius: 50%;
-            object-fit: contain;
+            overflow: hidden;
             margin: 0 auto 36px;
             background: rgba(12,22,12,0.6);
             border: 2px solid rgba(201,169,110,0.25);
-            padding: 12px;
             filter: drop-shadow(0 8px 32px rgba(0,0,0,0.5)) brightness(1.08);
             opacity: 0;
             transform: scale(0.8) translateY(20px);
             animation: logoIn 1.2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-logo-circle img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
         }
 
         @keyframes logoIn {
@@ -570,6 +580,7 @@
         .badge-premium { background: rgba(88,129,87,0.2); color: var(--olive-300); border: 1px solid rgba(88,129,87,0.25); }
         .badge-value { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.1); }
 
+        /* ===== VIDEO IN CARD ===== */
         .pcard-img {
             position: relative;
             height: 320px;
@@ -577,18 +588,20 @@
             background: #0a120a;
         }
 
-        .pcard-img img {
+        .pcard-img video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .pcard:hover .pcard-img img { transform: scale(1.08); }
+        .pcard:hover .pcard-img video { transform: scale(1.08); }
 
         .pcard-img-over {
             position: absolute; inset: 0;
             background: linear-gradient(to top, rgba(12,22,12,0.95) 0%, rgba(12,22,12,0.2) 40%, transparent 65%);
+            z-index: 2;
+            pointer-events: none;
         }
 
         .pcard-body {
@@ -857,7 +870,7 @@
             line-height: 1.4;
         }
 
-        /* ===== DELIVERY BANNER ===== */
+        /* ===== DELIVERY ===== */
         .delivery-banner {
             padding: 48px 24px;
             background: linear-gradient(135deg, rgba(88,129,87,0.08) 0%, rgba(201,169,110,0.05) 100%);
@@ -937,13 +950,20 @@
             gap: 14px;
         }
 
-        .footer-logo-img {
+        .footer-logo-circle {
             width: 52px; height: 52px;
             border-radius: 50%;
-            object-fit: contain;
+            overflow: hidden;
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.06);
-            padding: 5px;
+            flex-shrink: 0;
+        }
+
+        .footer-logo-circle img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
         }
 
         .footer-logo-text {
@@ -1070,7 +1090,7 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .nav-mobile-btn { display: block; }
-            .hero-logo { width: 100px; height: 100px; padding: 10px; }
+            .hero-logo-circle { width: 100px; height: 100px; }
             .products-grid { grid-template-columns: 1fr; max-width: 460px; }
             .pcard-img { height: 280px; }
             .pcard-foot { flex-direction: column; align-items: stretch; gap: 16px; }
@@ -1086,7 +1106,7 @@
         @media (max-width: 480px) {
             .nav { padding: 14px 18px; }
             .nav.scrolled { padding: 10px 18px; }
-            .nav-logo-img { width: 38px; height: 38px; }
+            .nav-logo-circle { width: 38px; height: 38px; }
             .nav-logo-text { display: none; }
             .products { padding: 80px 14px 80px; }
             .pcard-body { padding: 20px 20px 24px; }
@@ -1103,7 +1123,9 @@
 <!-- Nav -->
 <nav class="nav" id="navbar">
     <a href="#" class="nav-logo">
-        <img class="nav-logo-img" src="https://z-cdn-media.chatglm.cn/files/c536d43d-cc21-4939-a3cf-a806319c5370.png?auth_key=1882224957-385b00bbd34646c3b7bdae4c82ce7fdb-0-763fb0ae96c2521ea7aaa26ac73adcc2" alt="Apulia Olive Oil CZ">
+        <div class="nav-logo-circle">
+            <img src="https://z-cdn-media.chatglm.cn/files/c536d43d-cc21-4939-a3cf-a806319c5370.png?auth_key=1882224957-385b00bbd34646c3b7bdae4c82ce7fdb-0-763fb0ae96c2521ea7aaa26ac73adcc2" alt="Apulia Olive Oil CZ">
+        </div>
         <div class="nav-logo-text">
             <strong>Apulia Olive Oil</strong>
             Česká republika
@@ -1112,7 +1134,7 @@
     <div class="nav-links">
         <a href="#products">Produkty</a>
         <a href="#delivery">Doprava</a>
-        <a href="https://wa.me/420XXXXXXXXX" target="_blank" class="nav-cta">
+        <a href="https://wa.me/420604264270" target="_blank" class="nav-cta">
             <i data-lucide="message-circle" style="width:14px;height:14px;"></i>
             Objednat
         </a>
@@ -1127,19 +1149,29 @@
     <button class="mobile-close" id="mobileClose"><i data-lucide="x" style="width:28px;height:28px;"></i></button>
     <a href="#products" onclick="closeMobile()">Produkty</a>
     <a href="#delivery" onclick="closeMobile()">Doprava</a>
-    <a href="https://wa.me/420XXXXXXXXX" target="_blank" onclick="closeMobile()">WhatsApp</a>
+    <a href="https://wa.me/420604264270" target="_blank" onclick="closeMobile()">WhatsApp</a>
     <a href="https://tiktok.com/@apuliaoliveoilcz" target="_blank" onclick="closeMobile()">TikTok</a>
 </div>
 
 <!-- Hero -->
 <section class="hero">
     <div class="hero-bg">
-        <img src="https://z-cdn-media.chatglm.cn/files/236ec8d7-60e9-4208-9993-90a74f31eda7.jpg?auth_key=1882226220-ba9ab7cd36ca409abf0ed94576288bfa-0-08d48a5c2241622bca94327c48e1b9f3" alt="Olivové větve s olivami" loading="eager">
+        <!--
+            ██████████████████████████████████████████████████████
+            █  ЗАГРУЗИТЕ СВОЁ ВИДЕО И ПОМЕНИТЕ ПУТЬ НИЖЕ:      █
+            █  Замените "hero-video.mp4" на имя вашего файла     █
+            ██████████████████████████████████████████████████████
+        -->
+        <video autoplay muted loop playsinline>
+            <source src="b2626a56f9928aa13c7d9f174ef8edd4.mp4" type="video/mp4">
+        </video>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-particles" id="particles"></div>
     <div class="hero-content">
-        <img class="hero-logo" src="https://z-cdn-media.chatglm.cn/files/c536d43d-cc21-4939-a3cf-a806319c5370.png?auth_key=1882224957-385b00bbd34646c3b7bdae4c82ce7fdb-0-763fb0ae96c2521ea7aaa26ac73adcc2" alt="Apulia Olive Oil CZ">
+        <div class="hero-logo-circle">
+            <img src="https://z-cdn-media.chatglm.cn/files/c536d43d-cc21-4939-a3cf-a806319c5370.png?auth_key=1882224957-385b00bbd34646c3b7bdae4c82ce7fdb-0-763fb0ae96c2521ea7aaa26ac73adcc2" alt="Apulia Olive Oil CZ">
+        </div>
         <div class="hero-badge">
             <span class="dot"></span>
             100% Italiano · Přímý dovoz do ČR
@@ -1159,7 +1191,7 @@
                 Vybrat olej
                 <i data-lucide="arrow-down" style="width:16px;height:16px;"></i>
             </a>
-            <a href="https://wa.me/420XXXXXXXXX?text=Dobr%C3%BD%20den%2C%20m%C3%A1m%20z%C3%A1jem%20o%20olivov%C3%BD%20olej%20Apulia%20Olive%20Oil%20CZ." target="_blank" class="btn-ghost">
+            <a href="https://wa.me/420604264270?text=Dobr%C3%BD%20den%2C%20m%C3%A1m%20z%C3%A1jem%20o%20olivov%C3%BD%20olej%20Apulia%20Olive%20Oil%20CZ." target="_blank" class="btn-ghost">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Napsat na WhatsApp
             </a>
@@ -1180,11 +1212,18 @@
     </div>
     <div class="products-grid">
 
-        <!-- EXTRA VIRGIN 5L — фото обрезано на продукт -->
+        <!-- ===== KARTA 1: EXTRA VIRGIN 5L ===== -->
         <div class="pcard type-extra reveal">
             <div class="pcard-badge badge-premium">Premium</div>
             <div class="pcard-img">
-                <img src="https://z-cdn-media.chatglm.cn/files/3d71f80e-49e4-42f1-a5dc-619df041fdf2.jpg?auth_key=1882221875-f0efbe6c4e2a448bac5aff3f9c66e688-0-ed6299277db666df88bd24f578fd7b96" alt="Extra Panenský Olivový Olej 5L" style="object-position: 25% 50%;">
+                <!--
+                    ██████████████████████████████████████████
+                    █  ВИДЕО 1: Замените "video-extra.mp4"    █
+                    ██████████████████████████████████████████
+                -->
+                <video autoplay muted loop playsinline>
+                    <source src="exstra_compressed_crf21.mp4" type="video/mp4">
+                </video>
                 <div class="pcard-img-over"></div>
             </div>
             <div class="pcard-body">
@@ -1230,7 +1269,7 @@
                             <div class="pcard-per-liter">258 Kč / litr</div>
                         </div>
                     </div>
-                    <a href="https://wa.me/420XXXXXXXXX?text=Dobr%C3%BD%20den%2C%20chci%20objednat%3A%20Extra%20Panensk%C3%BD%20Olivov%C3%BD%20Olej%205L%20-%201%20290%20CZK" target="_blank" class="btn-buy">
+                    <a href="https://wa.me/420604264270?text=Dobr%C3%BD%20den%2C%20chci%20objednat%3A%20Extra%20Panensk%C3%BD%20Olivov%C3%BD%20Olej%205L%20-%201%20290%20CZK" target="_blank" class="btn-buy">
                         Koupit
                         <i data-lucide="arrow-right"></i>
                     </a>
@@ -1238,11 +1277,18 @@
             </div>
         </div>
 
-        <!-- VERGINE 10L — фото обрезано на продукт -->
+        <!-- ===== KARTA 2: VERGINE 10L ===== -->
         <div class="pcard type-vergine reveal rd1">
             <div class="pcard-badge badge-best">⭐ Nejprodávanější</div>
             <div class="pcard-img">
-                <img src="https://z-cdn-media.chatglm.cn/files/418eef88-7ef9-4f1c-9692-da81ab0f41e2.jpg?auth_key=1882221875-47a81e87415d4e0b9c93c1315ca6fb6e-0-f7fbff4b512d21ce6c326e56246f6821" alt="Olivový Olej Vergine 10L" style="object-position: 25% 50%;">
+                <!--
+                    ██████████████████████████████████████████
+                    █  ВИДЕО 2: Замените "video-vergine.mp4"  █
+                    ██████████████████████████████████████████
+                -->
+                <video autoplay muted loop playsinline>
+                    <source src="color_compressed_crf23.mp4" type="video/mp4">
+                </video>
                 <div class="pcard-img-over"></div>
             </div>
             <div class="pcard-body">
@@ -1287,7 +1333,7 @@
                             <div class="pcard-per-liter">169 Kč / litr</div>
                         </div>
                     </div>
-                    <a href="https://wa.me/420XXXXXXXXX?text=Dobr%C3%BD%20den%2C%20chci%20objednat%3A%20Olivov%C3%BD%20Olej%20Vergine%2010L%20-%201%20690%20CZK" target="_blank" class="btn-buy">
+                    <a href="https://wa.me/420604264270?text=Dobr%C3%BD%20den%2C%20chci%20objednat%3A%20Olivov%C3%BD%20Olej%20Vergine%2010L%20-%201%20690%20CZK" target="_blank" class="btn-buy">
                         Koupit
                         <i data-lucide="arrow-right"></i>
                     </a>
@@ -1295,11 +1341,18 @@
             </div>
         </div>
 
-        <!-- OLIO DI OLIVA 10L — фото обрезано на продукт -->
+        <!-- ===== KARTA 3: OLIO DI OLIVA 10L ===== -->
         <div class="pcard type-frying reveal rd2">
             <div class="pcard-badge badge-value">Nejlepší cena/litr</div>
             <div class="pcard-img">
-                <img src="https://z-cdn-media.chatglm.cn/files/c2aaec85-74e5-488d-9824-080e3c1aba6d.jpg?auth_key=1882221875-9a894ceb3a48450480a4b1bb81d942f6-0-c51c7888bc7a47fd22323a6127991d27" alt="Olivový Olej na Smažení 10L" style="object-position: 25% 50%;">
+                <!--
+                    ██████████████████████████████████████████
+                    █  ВИДЕО 3: Замените "video-frying.mp4"   █
+                    ██████████████████████████████████████████
+                -->
+                <video autoplay muted loop playsinline>
+                    <source src="nocolor_compressed_crf21.mp4" type="video/mp4">
+                </video>
                 <div class="pcard-img-over"></div>
             </div>
             <div class="pcard-body">
@@ -1344,7 +1397,7 @@
                             <div class="pcard-per-liter">149 Kč / litr</div>
                         </div>
                     </div>
-                    <a href="https://wa.me/420XXXXXXXXX?text=Dobr%C3%BD%20den%2C%20chci%20objednat%3A%20Olivov%C3%BD%20Olej%20na%20Sma%C5%BEen%C3%AD%2010L%20-%201%20490%20CZK" target="_blank" class="btn-buy">
+                    <a href="https://wa.me/420604264270?text=Dobr%C3%BD%20den%2C%20chci%20objednat%3A%20Olivov%C3%BD%20Olej%20na%20Sma%C5%BEen%C3%AD%2010L%20-%201%20490%20CZK" target="_blank" class="btn-buy">
                         Koupit
                         <i data-lucide="arrow-right"></i>
                     </a>
@@ -1386,7 +1439,7 @@
     </div>
 </section>
 
-<!-- Delivery Banner -->
+<!-- Delivery -->
 <section class="delivery-banner" id="delivery">
     <div class="delivery-inner">
         <div class="delivery-item reveal">
@@ -1412,18 +1465,20 @@
     </div>
 </section>
 
-<!-- Footer — БЕЗ текста про производителя -->
+<!-- Footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-top">
             <div class="footer-brand">
                 <div class="footer-logo-row">
-                    <img class="footer-logo-img" src="https://z-cdn-media.chatglm.cn/files/c536d43d-cc21-4939-a3cf-a806319c5370.png?auth_key=1882224957-385b00bbd34646c3b7bdae4c82ce7fdb-0-763fb0ae96c2521ea7aaa26ac73adcc2" alt="Apulia Olive Oil CZ">
+                    <div class="footer-logo-circle">
+                        <img src="https://z-cdn-media.chatglm.cn/files/c536d43d-cc21-4939-a3cf-a806319c5370.png?auth_key=1882224957-385b00bbd34646c3b7bdae4c82ce7fdb-0-763fb0ae96c2521ea7aaa26ac73adcc2" alt="Apulia Olive Oil CZ">
+                    </div>
                     <div class="footer-logo-text">Apulia <span>Olive Oil</span></div>
                 </div>
                 <p class="footer-desc">Exkluzivní distribuce prémiového olivového oleje z Apulie v České republice. Přímý dovoz od výrobce — bez zprostředkovatelů.</p>
                 <div class="footer-socials">
-                    <a href="https://wa.me/420XXXXXXXXX" target="_blank" class="footer-social" aria-label="WhatsApp">
+                    <a href="https://wa.me/420604264270" target="_blank" class="footer-social" aria-label="WhatsApp">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                     </a>
                     <a href="https://tiktok.com/@apuliaoliveoilcz" target="_blank" class="footer-social" aria-label="TikTok">
@@ -1439,9 +1494,9 @@
             </div>
             <div class="footer-col">
                 <h4>Kontakt</h4>
-                <a href="https://wa.me/420XXXXXXXXX" target="_blank"><i data-lucide="message-circle"></i> WhatsApp</a>
+                <a href="https://wa.me/420604264270" target="_blank"><i data-lucide="message-circle"></i> WhatsApp</a>
                 <a href="https://tiktok.com/@apuliaoliveoilcz" target="_blank"><i data-lucide="video"></i> TikTok</a>
-                <a href="tel:+420XXXXXXXXX"><i data-lucide="phone"></i> +420 XXX XXX XXX</a>
+                <a href="tel:+420604264270"><i data-lucide="phone"></i> +420 604 264 270</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1451,7 +1506,7 @@
 </footer>
 
 <!-- WhatsApp Float -->
-<a href="https://wa.me/420XXXXXXXXX?text=Dobr%C3%BD%20den%2C%20m%C3%A1m%20z%C3%A1jem%20o%20olivov%C3%BD%20olej." target="_blank" class="wa-float" aria-label="WhatsApp">
+<a href="https://wa.me/420604264270?text=Dobr%C3%BD%20den%2C%20m%C3%A1m%20z%C3%A1jem%20o%20olivov%C3%BD%20olej." target="_blank" class="wa-float" aria-label="WhatsApp">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
@@ -1487,7 +1542,14 @@
 
     document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
 
-    window.addEventListener('scroll',()=>{const img=document.querySelector('.hero-bg img');if(img&&scrollY<innerHeight)img.style.transform=`scale(1.1) translateY(${scrollY*0.12}px)`;});
+    // Пауза видео когда не видно (экономия ресурсов)
+    const videos=document.querySelectorAll('.pcard-img video');
+    const vidObs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+            if(e.isIntersecting){e.target.play();}else{e.target.pause();}
+        });
+    },{threshold:0.2});
+    videos.forEach(v=>vidObs.observe(v));
 </script>
 </body>
 </html>
